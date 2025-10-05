@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\u1231271\Documents\GitHub\Quaternions\Quaternions\external\glfw-3.4\tests\triangle-vulkan.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\u1231271\Documents\GitHub\Quaternions\Quaternions\external\glfw-3.4\deps\glad\vulkan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\u1231271\Documents\GitHub\Quaternions\Quaternions\external\glfw-3.4\tests\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{BC4546FC-6D04-35AC-B12C-B201958797BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{CE3ADA05-74C5-374E-A1F9-84891A6B78A1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
