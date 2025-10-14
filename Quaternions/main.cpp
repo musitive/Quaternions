@@ -7,6 +7,9 @@
 
 #include <learnopengl/shader_m.h>
 
+#include "Quaternion.hpp"
+#include "QuaternionMath.hpp"
+
 #include <filesystem>
 #include <iostream>
 
@@ -61,7 +64,7 @@ int main()
     // build and compile our shader zprogram
     // ------------------------------------
     Shader ourShader("shader.vs", "shader.fs");
-
+    
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
@@ -74,7 +77,7 @@ int main()
         -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
 
         // Front face - Green
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
          0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
          0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
          0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
