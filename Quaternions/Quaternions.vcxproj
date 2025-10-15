@@ -110,7 +110,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>include;external/glfw-3.4/include;external/glad/include;external/glm-0.9.4.4;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;external/glfw-3.4/include;external/glad/include;external/glm-0.9.4.4;external/glm-0.9.4.4/glm;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
