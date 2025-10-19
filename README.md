@@ -11,3 +11,5 @@
 [OpenGL](https://learnopengl.com/book/book_pdf.pdf)
 
 [Quaternions](https://eater.net/quaternions)
+
+[QuaternionOperations](https://lisyarus.github.io/blog/posts/introduction-to-quaternions.html#section-quaternion-multiplication)

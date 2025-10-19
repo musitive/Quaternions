@@ -8,12 +8,12 @@
 #include <cassert>
 
 namespace df {
-namespace detail			// @TODO ask Pablo about namespace detail
+namespace detail
 {
 	template <typename T> 
 	struct tquat
 	{
-		enum ctor{null};	// @TODO ask Pablo what this is???
+		enum ctor{null};
 
 		typedef T value_type;
 		typedef std::size_t size_type;
@@ -21,33 +21,51 @@ namespace detail			// @TODO ask Pablo about namespace detail
 	public:
 		value_type x, y, z, w;
 
+		// NUMBER OF ITEMS IN VEC, NOT ACTUAL LENGTH
 		GLM_FUNC_DECL size_type length() const
 		{
-			return glm::sqrt(w*w + x*x + y*y + z*z);
+			return 4;
 		}
 
 		// Constructors
-		tquat() : w(0), x(0), y(0), z(0) {}
+		tquat() :
+			x(0),
+			y(0),
+			z(0),
+			w(1)
+		{}
 		
-		explicit tquat(
+		explicit tquat
+		(
 			value_type const& s, 
-			glm::detail::tvec3<T> const & v)
-				: w(s), x(v.x), y(v.y), z(v.z) {}
+			glm::detail::tvec3<T> const & v
+		) :
+			x(v.x),
+			y(v.y),
+			z(v.z),
+			w(s)
+		{}
 
-		explicit tquat(
+		explicit tquat
+		(
 			value_type const& w,
 			value_type const& x,
 			value_type const& y,
-			value_type const& z)
-			: w(w), x(x), y(y), z(z) {}
+			value_type const& z
+		) :
+			x(x),
+			y(y),
+			z(z),
+			w(w)
+		{}
 
 		// Conversions
 
-		/// Build a quaternion from euler angles (pitch, yaw, roll), in radians.
-		explicit tquat(tvec3<T> const& eulerAngles)
-		{
-			
-		}
+		// /// Build a quaternion from euler angles (pitch, yaw, roll), in radians.
+		// explicit tquat(tvec3<T> const& eulerAngles)
+		// {
+		// 	
+		// }
 //
 // 		explicit tquat(tmat3x3<T> const& m)
 // 		{
@@ -59,111 +77,171 @@ namespace detail			// @TODO ask Pablo about namespace detail
 // 			
 // 		}
 //
-// 		// Accesses
-// 		value_type & operator[](int i)
-// 		{
-// 			assert(i >= 0 && i < 4);
-// 			if (i == 0) return x;
-// 			if (i == 1) return y;
-// 			if (i == 2) return z;
-// 			if (i == 3) return w;
-// 		}
-// 		
-// 		value_type const & operator[](int i) const
-// 		{
-// 			assert(i >= 0 && i < 4);
-// 			if (i == 0) return x;
-// 			if (i == 1) return y;
-// 			if (i == 2) return z;
-// 			if (i == 3) return w;
-// 		}
-//
-// 		// Operators
-// 		tquat<T> & operator*=(value_type const& s)
-// 		{
-// 			
-// 		}
-// 		
-// 		tquat<T> & operator/=(value_type const& s)
-// 		{
-// 			
-// 		}
+		// Accesses
+		value_type& operator[](int i)
+		{
+			assert(i >= 0 && i < 4);
+			if (i == 0) return x;
+			if (i == 1) return y;
+			if (i == 2) return z;
+			if (i == 3) return w;
+		}
+		
+		value_type const& operator[](int i) const
+		{
+			assert(i >= 0 && i < 4);
+			if (i == 0) return x;
+			if (i == 1) return y;
+			if (i == 2) return z;
+			if (i == 3) return w;
+		}
+
+		// Operators
+		tquat<T> & operator*=
+		(
+			value_type const& s
+		)
+		{
+			w *= s;
+			x *= s;
+			y *= s;
+			z *= s;
+			return *this;
+		}
+		
+		tquat<T> & operator/=
+		(
+			value_type const& s
+		)
+		{
+			w /= s;
+			x /= s;
+			y /= s;
+			z /= s;
+			return *this;
+		}
 	};
-//
-// 	template <typename T>
-// 	detail::tquat<T> operator- (detail::tquat<T> const & q);
-//
-// 	template <typename T>
-// 	detail::tquat<T> operator+ (
-// 		detail::tquat<T> const & q,
-// 		detail::tquat<T> const & p); 
-//
-// 	template <typename T> 
-// 	detail::tquat<T> operator* ( 
-// 		detail::tquat<T> const & q, 
-// 		detail::tquat<T> const & p); 
-//
-// 	template <typename T>
-// 	detail::tvec3<T> operator* (
-// 		detail::tquat<T> const & q, 
-// 		detail::tvec3<T> const & v);
-//
-// 	template <typename T> 
-// 	detail::tvec3<T> operator* (
-// 		detail::tvec3<T> const & v,
-// 		detail::tquat<T> const & q);
-//
-// 	template <typename T> 
-// 	detail::tvec4<T> operator* (
-// 		detail::tquat<T> const & q, 
-// 		detail::tvec4<T> const & v);
-//
-// 	template <typename T> 
-// 	detail::tvec4<T> operator* (
-// 		detail::tvec4<T> const & v,
-// 		detail::tquat<T> const & q);
-//
-// 	template <typename T> 
-// 	detail::tquat<T> operator* (
-// 		detail::tquat<T> const & q, 
-// 		typename detail::tquat<T>::value_type const & s);
-//
-// 	template <typename T> 
-// 	detail::tquat<T> operator* (
-// 		typename detail::tquat<T>::value_type const & s,
-// 		detail::tquat<T> const & q);
-//
-// 	template <typename T> 
-// 	detail::tquat<T> operator/ (
-// 		detail::tquat<T> const & q, 
-// 		typename detail::tquat<T>::value_type const & s);
-//
+
+	template <typename T>
+	detail::tquat<T> operator-
+	(
+		detail::tquat<T> const& q
+	)
+	{
+		return detail::tquat<T>(-q.w, -q.x, -q.y, -q.z);
+	}
+
+	template <typename T>
+	detail::tquat<T> operator+
+	(
+		detail::tquat<T> const& q,
+		detail::tquat<T> const& p
+	)
+	{
+		return detail::tquat<T>
+		(
+			q.w + p.w,
+			q.x + p.x,
+			q.y + p.y,
+			q.z + p.z
+		);
+	}
+
+	template <typename T> 
+	detail::tquat<T> operator*
+	( 
+		detail::tquat<T> const& q, 
+		detail::tquat<T> const& p
+	)
+	{		
+		return detail::tquat<T>
+		(
+			q.w*p.w - q.x*p.x - q.y*p.y - q.z*p.z,
+			q.w*p.x + q.x*p.w + q.y*p.z - q.z*p.y,
+			q.w*p.y + q.y*p.w - q.x*p.z + q.z*p.x,
+			q.w*p.z + q.z*p.w + q.x*p.y - q.y*p.x
+		);
+	}
+	
+	template <typename T> 
+	detail::tquat<T> operator*
+	(
+		detail::tquat<T> const& q, 
+		typename detail::tquat<T>::value_type const& s
+	)
+	{
+		return detail::tquat<T>
+		(
+			q.w * s,
+			q.x * s,
+			q.y * s,
+			q.z * s
+		);
+	}
+
+	template <typename T> 
+	detail::tquat<T> operator*
+	(
+		typename detail::tquat<T>::value_type const& s,
+		detail::tquat<T> const& q
+	)
+	{
+		return q * s;
+	}
+
+	template <typename T> 
+	detail::tquat<T> operator/
+	(
+		detail::tquat<T> const& q, 
+		typename detail::tquat<T>::value_type const& s
+	)
+	{
+		return detail::tquat<T>
+		(
+			q.w / s,
+			q.x / s,
+			q.y / s,
+			q.z / s
+		);
+	}
+
 } // namespace detail
-//
-// 	/// @addtogroup gtc_quaternion
-// 	/// @{
-//
-// 	/// Returns the length of the quaternion. 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	template <typename T> 
-// 	T length(
-// 		detail::tquat<T> const & q);
-//
-// 	/// Returns the normalized quaternion. 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	template <typename T> 
-// 	detail::tquat<T> normalize(
-// 		detail::tquat<T> const & q);
-// 		
-// 	/// Returns dot product of q1 and q2, i.e., q1[0] * q2[0] + q1[1] * q2[1] + ... 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	template <typename T> 
-// 	T dot(
-// 		detail::tquat<T> const & q1, 
-// 		detail::tquat<T> const & q2);
+
+	/// @addtogroup df_quaternion
+	/// @{
+
+	/// Returns dot product of q1 and q2, i.e., q1[0] * q2[0] + q1[1] * q2[1] + ... 
+	template <typename T> 
+	T dot
+	(
+		detail::tquat<T> const & q1,
+		detail::tquat<T> const & q2
+	)
+	{
+		return q1.w * q2.w + q1.x * q2.x + q1.y * q2.y + q1.z * q2.z;
+	}
+	
+	/// Returns the length of the quaternion. 
+	template <typename T> 
+	T length
+	(
+		detail::tquat<T> const& q
+	)
+	{
+		return glm::sqrt(df::dot(q, q));
+	}
+
+	/// Returns the normalized quaternion. 
+	template <typename T> 
+	detail::tquat<T> normalize
+	(
+		detail::tquat<T> const & q
+	)
+	{
+		T length = df::length(q);
+		return q / length;
+	}
+
 //
 // 	/// Spherical linear interpolation of two quaternions.
 // 	/// The interpolation is oriented and the rotation is performed at constant speed.
@@ -332,40 +410,10 @@ namespace detail			// @TODO ask Pablo about namespace detail
 // 		valType const & angle, 
 // 		detail::tvec3<valType> const & axis);
 //
-// 	/// Quaternion of floating-point numbers. 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	typedef detail::tquat<float> quat;
-//
-// 	/// Quaternion of half-precision floating-point numbers.
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	typedef detail::tquat<detail::half>	hquat;
-//
-// 	/// Quaternion of single-precision floating-point numbers. 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	typedef detail::tquat<float>	fquat;
-//
-// 	/// Quaternion of double-precision floating-point numbers. 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	typedef detail::tquat<double>	dquat;
-//
-// 	/// Quaternion of low precision floating-point numbers.
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	typedef detail::tquat<lowp_float>		lowp_quat;
-//
-// 	/// Quaternion of medium precision floating-point numbers. 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	typedef detail::tquat<mediump_float>	mediump_quat;
-//
-// 	/// Quaternion of high precision floating-point numbers. 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	typedef detail::tquat<highp_float>		highp_quat;
+	/// Quaternion of floating-point numbers. 
+	/// 
+	/// @see gtc_quaternion
+	typedef detail::tquat<float> quat;
 
 	/// @}
 } // namespace df
