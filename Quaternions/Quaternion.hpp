@@ -286,21 +286,31 @@ namespace detail
 // 		detail::tquat<T> const & x, 
 // 		detail::tquat<T> const & y, 
 // 		T const & a);
-//
-// 	/// Returns the q conjugate. 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	template <typename T> 
-// 	detail::tquat<T> conjugate(
-// 		detail::tquat<T> const & q);
-//
-// 	/// Returns the q inverse. 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	template <typename T> 
-// 	detail::tquat<T> inverse(
-// 		detail::tquat<T> const & q);
-//
+
+	/// Returns the q conjugate. 
+	/// 
+	/// @see gtc_quaternion
+	template <typename T> 
+	detail::tquat<T> conjugate
+	(
+		detail::tquat<T> const& q
+	)
+	{
+		return detail::tquat<T>(q.w, -q.x, -q.y, -q.z);
+	}
+
+	/// Returns the q inverse. 
+	/// 
+	/// @see gtc_quaternion
+	template <typename T> 
+	detail::tquat<T> inverse
+	(
+		detail::tquat<T> const& q
+	)
+	{
+		return conjugate(q) / df::dot(q, q);
+	}
+
 // 	/// Rotates a quaternion from an vector of 3 components axis and an angle.
 // 	/// 
 // 	/// @param q Source orientation
@@ -313,13 +323,6 @@ namespace detail
 // 		detail::tquat<T> const & q, 
 // 		typename detail::tquat<T>::value_type const & angle, 
 // 		detail::tvec3<T> const & axis);
-//
-// 	/// Returns euler angles, yitch as x, yaw as y, roll as z. 
-// 	/// 
-// 	/// @see gtc_quaternion
-// 	template <typename T> 
-// 	detail::tvec3<T> eulerAngles(
-// 		detail::tquat<T> const & x);
 //
 // 	/// Returns roll value of euler angles expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
 // 	///
@@ -342,6 +345,12 @@ namespace detail
 // 	valType yaw(
 // 		detail::tquat<valType> const & x);
 //
+// 	/// Returns euler angles, yitch as x, yaw as y, roll as z. 
+// 	/// 
+// 	/// @see gtc_quaternion
+// 	template <typename T> 
+// 	detail::tvec3<T> eulerAngles(
+// 		detail::tquat<T> const & x);
 // 	/// Converts a quaternion to a 3 * 3 matrix. 
 // 	/// 
 // 	/// @see gtc_quaternion
@@ -384,32 +393,51 @@ namespace detail
 // 	detail::tvec3<valType> axis(
 // 		detail::tquat<valType> const & x);
 //
-// 	/// Build a quaternion from an angle and a normalized axis. 
-// 	///
-// 	/// @param angle Angle expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
-// 	/// @param x x component of the x-axis, x, y, z must be a normalized axis
-// 	/// @param y y component of the y-axis, x, y, z must be a normalized axis
-// 	/// @param z z component of the z-axis, x, y, z must be a normalized axis
-// 	///
-// 	/// @see gtc_quaternion
-// 	template <typename valType> 
-// 	detail::tquat<valType> angleAxis(
-// 		valType const & angle, 
-// 		valType const & x, 
-// 		valType const & y, 
-// 		valType const & z);
-//
-// 	/// Build a quaternion from an angle and a normalized axis.
-// 	///
-// 	/// @param angle Angle expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
-// 	/// @param axis Axis of the quaternion, must be normalized. 
-// 	///
-// 	/// @see gtc_quaternion
-// 	template <typename valType> 
-// 	detail::tquat<valType> angleAxis(
-// 		valType const & angle, 
-// 		detail::tvec3<valType> const & axis);
-//
+	/// Build a quaternion from an angle and a normalized axis. 
+	///
+	/// @param angle Angle expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
+	/// @param x x component of the x-axis, x, y, z must be a normalized axis
+	/// @param y y component of the y-axis, x, y, z must be a normalized axis
+	/// @param z z component of the z-axis, x, y, z must be a normalized axis
+	///
+	/// @see gtc_quaternion
+	template <typename valType> 
+	detail::tquat<valType> angleAxis
+	(
+		valType const& angle, 
+		valType const& x, 
+		valType const& y, 
+		valType const& z
+	)
+	{
+		detail::tquat<valType> result;
+		valType const halfAngle = angle * valType(0.5);
+		valType const s = glm::sin(halfAngle);
+	
+		result.w = glm::cos(halfAngle);
+		result.x = x * s;
+		result.y = y * s;
+		result.z = z * s;
+
+		return result;
+	}
+
+	/// Build a quaternion from an angle and a normalized axis.
+	///
+	/// @param angle Angle expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
+	/// @param axis Axis of the quaternion, must be normalized. 
+	///
+	/// @see gtc_quaternion
+	template <typename valType> 
+	detail::tquat<valType> angleAxis
+	(
+		valType const& angle,
+		glm::detail::tvec3<valType> const& axis
+	)
+	{
+		return angleAxis(angle, axis.x, axis.y, axis.z);
+	}
+
 	/// Quaternion of floating-point numbers. 
 	/// 
 	/// @see gtc_quaternion
